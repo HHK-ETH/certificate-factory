@@ -1,0 +1,33 @@
+{
+  "name": "certificate-factory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HHK-ETH/certificate-factory.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HHK-ETH/certificate-factory/issues"
+  },
+  "homepage": "https://github.com/HHK-ETH/certificate-factory#readme",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "^4.1.0",
+    "@types/chai": "^4.2.18",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.12.1",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.3.0",
+    "ethers": "^5.3.0",
+    "hardhat": "^2.3.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  }
+}
