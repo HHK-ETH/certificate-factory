@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useWeb3React} from "@web3-react/core";
 import {Web3Provider} from "ethers/providers";
 import {Contract, providers} from "ethers";
-import {FACTORY_ABI, s3} from "../constants";
+import {FACTORY_ABI, FACTORY_ADDR, s3} from "../constants";
 import {sha256} from "js-sha256";
 let factoryWithSigner: Contract;
 
@@ -71,9 +71,8 @@ export default function Certificate(): JSX.Element {
         async function test() {
             if (active) {
                 const web3Provider = new providers.Web3Provider(await connector.getProvider());
-                const factory = new Contract('0x5FbDB2315678afecb367f032d93F642f64180aa3', FACTORY_ABI, web3Provider);
+                const factory = new Contract(FACTORY_ADDR, FACTORY_ABI, web3Provider);
                 factoryWithSigner = await factory.connect(web3Provider.getSigner());
-                console.log(await factoryWithSigner.certificates('unused hash'));
             }
         }
         test();
