@@ -3,7 +3,7 @@ Small project to store certificate hashes on Ethereum and retrieve them with web
 
 ## Install project
 
-```cmd
+```js
 //install hardhat part
 npm install
 
@@ -14,12 +14,12 @@ yarn
 
 ## Start project
 
-```cmd
+```js
 //in root dir
 npx hardhat compile
 npx hardhat node
 //then open new console tab
-npx hardhat deploy
+npx hardhat run --network localhost scripts/deploy.ts
 //copy paste contract addr in front/src/constant in FACTORY_ADDR
 //copy paste account #1 private key (used to deploy contract) in your metamask/wallet
 
@@ -29,7 +29,7 @@ yarn start
 ```
 ## Utils
 
-[hardhat network informations](https://ipfs.fleek.co/ipfs/bafybeigp7gmisamhzmgbtgfrhf7nkdwgu4j5mlqomatzy2zyte4thdshle)
+Setup hardhat network in metamask : [hardhat network informations](https://ipfs.fleek.co/ipfs/bafybeigp7gmisamhzmgbtgfrhf7nkdwgu4j5mlqomatzy2zyte4thdshle)
 
-Running test : `npx hardhat test //in root dir`
+Run test : `npx hardhat test //in root dir`
 
