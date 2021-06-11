@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useWeb3React} from "@web3-react/core";
 import {Web3Provider} from "ethers/providers";
 import {Contract, providers} from "ethers";
-import {FACTORY_ABI} from "../constants";
-const md5 = require('md5');
+import {FACTORY_ABI, s3} from "../constants";
+import {sha256} from "js-sha256";
 let factoryWithSigner: Contract;
 
 async function checkFile(file: File) {
@@ -12,11 +12,11 @@ async function checkFile(file: File) {
         return;
     }
     const fileData = await file.text();
-    const hash = md5(fileData);
+    const hash = sha256(fileData);
     const isValidHash = await factoryWithSigner.certificates(hash);
     if (isValidHash) {
         //todo useState so we can update front
-        alert('This file is valid');
+        alert('This file is valid : https://ipfs.io/ipfs/'+isValidHash);
     }
     else {
         alert('This file is invalid');
@@ -29,11 +29,24 @@ async function addFile(file: File) {
         return;
     }
     const fileData = await file.text();
-    const hash = md5(fileData);
-    const tx = await factoryWithSigner.addCertificate(hash, 'ipfs hash');
-    factoryWithSigner.once('logAddCertificate', () => {
-        alert('File added with this hash : '+hash);
-    });
+    const hash = sha256(fileData);
+    const params = {
+        Bucket: 'hhk-eth-team-bucket',
+        Key: `nft/${Date.now()}`,
+        ContentType: file.type,
+        // Body contains the uploaded file
+        Body: file,
+        ACL: 'public-read',
+    };
+
+    const request = s3.putObject(params);
+    request.on('httpHeaders', async (statusCode, headers) => {
+        const ipfsHash = headers['x-fleek-ipfs-hash'];
+        const tx = await factoryWithSigner.addCertificate(hash, ipfsHash);
+        factoryWithSigner.once('logAddCertificate', () => {
+            alert('File added with this hash : '+hash);
+        });
+    }).send();
 }
 
 async function removeFile(file: File) {
@@ -42,7 +55,7 @@ async function removeFile(file: File) {
         return;
     }
     const fileData = await file.text();
-    const hash = md5(fileData);
+    const hash = sha256(fileData);
     const tx = await factoryWithSigner.removeCertificate(hash);
     factoryWithSigner.once('logRemoveCertificate', () => {
         alert('File removed with this hash : '+hash);
