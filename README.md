@@ -1,5 +1,5 @@
 # certificate-factory
-Small project to store certificate hashes on Ethereum and retrieve them with web3-react
+Small project to store certificate on Ethereum and IPFS and retrieve them with web3-react
 
 ## Install project
 
